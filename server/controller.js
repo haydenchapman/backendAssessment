@@ -16,6 +16,31 @@ module.exports = {
         let randomFortunes = fortune[randomIndex];
       
         res.status(200).send(randomFortunes);
+    },
+
+    addFortune: (req, res) => {
+        let {fortune} = req.body;
+
+        fortunes.push(fortune)
+
+        res.status(200).send('Fortune favored!')
+    },
+
+    updateFortune: (req, res) => {
+        let {index} = req.params;
+        let {fortune} = req.body;
+
+        fortunes.splice(index, 1, fortune)
+
+        res.status(200).send('Fortune upated!')
+    },
+
+    deleteFortune: (req, res) => {
+        let [index] = req.params()
+
+        fortunes.splice(index, 1)
+
+        res.status(200).send('Fortune daeleted!')
     }
-    
+
 }

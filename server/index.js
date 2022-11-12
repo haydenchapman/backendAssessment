@@ -9,6 +9,12 @@ app.use(express.json());
 
 const { getCompliment } = require('./controller')
 const {getFortune} = require('./controller');
+//fortune destruc
+const {addFortune} = require('./controller')
+const {updateFortune} = require('./controller')
+const {deleteFortune} = require('./controller'
+)
+
 
 //todolist
 let todoListArr = [];
@@ -54,5 +60,7 @@ app.get("https://dog.ceo/api/breeds/image/random", (req, res) => {
 
 app.get("/api/compliment", getCompliment);
 app.get('/api/fortune', getFortune);
+app.put('/api/fortune', updateFortune);
+app.delete('/api/fortune', deleteFortune);
 
 app.listen(4000, () => console.log("Docked at Port: 4000"));

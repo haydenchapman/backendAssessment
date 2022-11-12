@@ -1,6 +1,6 @@
 const complimentBtn = document.getElementById("complimentButton")
 const fortuneBtn = document.getElementById("fortuneButton")
-const cryptoBtn = document.querySelector("#btcprice");
+
 //doge!btns
 const dogeBtn = document.querySelector("#dog-btn");
 const dogeDiv = document.querySelector("#dog-contain");
@@ -21,6 +21,7 @@ const getCompliment = () => {
             alert(data);
     });
 };
+//fortune stuff
 const getFortune = () => {
     axios.get("http://localhost:4000/api/fortune/")
         .then(res => {
@@ -28,12 +29,55 @@ const getFortune = () => {
             alert(data);
     });
 };
+const newFortuneBtn = document.getElementById('new-fortune-button')
+const addFortune =()=>{
+    let fortuneInput = document.getElementById('new-fortune-input')
+
+    let body = {
+        fortune: fortuneInput.value
+    }
+
+    axios.post("http://localhost:4000/api/fortunes", body)
+        .then(res => {
+            alert(res.data)
+            fortuneInput.value = ''
+        })
+}
+const updateFortuneBtn = document.getElementById('update-fortune-button')
+const updateFortune = () => {
+    let fortuneIndex = document.getElementById('update-fortune-index')
+    let updatedFortuneInput = document.getElementById('update-fortune-input')
+
+    let body = {
+        fortune: updatedFortuneInput.value
+    }
+
+    axios.put(`http://localhost:4000/api/fortunes/${fortuneIndex.value}`, body)
+    .then(res => {
+        alert(res.data)
+        fortuneIndex.value = '';
+        updatedFortuneInput.value = '';
+    })
+}
+
+const deleteFortuneBtn = document.getElementById('delete-fortune-button')
+const deletedFortune = () => {
+    let deleteFortuneIndex = document.getElementById('delete-fortune-input')
+
+    axios.delete(`http://localhost:4000/api/fortunes/${deleteFortuneIndex.value}`, body)
+    .then(res => {
+        alert(res.data)
+        fortuneIndex.value = '';
+        deleteFortuneInput.value = '';
+    })
+}
 
 //doge button!
 const dogePic = (evt) => {
     evt.preventDefault();
-    axios.get("https://dog.ceo/api/breeds/image/random").then((res) => {
-      dogeDiv.innerHTML = '';
+    axios.get("https://dog.ceo/api/breeds/image/random")
+    .then((res) => {
+      dogeDiv.innerHTML = ' ';
       const dogeUrl = res.data.message;
       dogePicture.src = dogeUrl;
       dogeDiv.appendChild(dogePicture);
@@ -119,9 +163,11 @@ $.ajax(liveprice).done(function (response){
 });
 
 
-//eventlisten
+//eventlistens
 complimentBtn.addEventListener('click', getCompliment)
 fortuneBtn.addEventListener('click', getFortune)
+updateFortuneBtn.addEventListener('click', updateFortune)
+deleteFortuneBtn.addEventListener('click', deletedFortune)
 //doge
 dogeBtn.addEventListener('click', dogePic);
 //todo
